@@ -17,7 +17,7 @@ const OrganizationSchema = mongoose.Schema(
             required: true,
             validate: {
                 validator: checkName,
-                message: "Organization name already registered."
+                message: "Organization name already"
             }
         },
         slug: {
@@ -40,5 +40,4 @@ async function checkName(name) {
     }
 }
 
-const Organization = mongoose.model("Organization", OrganizationSchema);
-module.exports = Organization;
+module.exports = mongoose.model("Organization", OrganizationSchema);

@@ -5,6 +5,11 @@ const mongoose = require("mongoose");
 */
 const UserSchema = mongoose.Schema(
     {
+        org_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Organization",
+            required: true,
+        },
         username: {
             type: String,
             required: true,
@@ -54,5 +59,4 @@ async function checkEmail(email) {
     }
 }
 
-const User = mongoose.model("User", OrganizationSchema);
-module.exports = User;
+module.exports = mongoose.model("User", OrganizationSchema);
