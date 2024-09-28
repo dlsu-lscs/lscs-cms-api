@@ -1,0 +1,25 @@
+services:
+  lscs_cms_db:
+    image: mongo
+    container_name: lscs_cms_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - lscs_cms_data:/data/db
+
+  lscs_cms_api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: lscs_cms_api
+    ports:
+      - "3500:3500"
+    depends_on:
+      - lscs_cms_db
+
+volumes:
+  lscs_cms_data:
+
+networks:
+  default:
+    driver: bridge
