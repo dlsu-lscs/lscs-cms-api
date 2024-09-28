@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 /*
     Post Schema
@@ -17,29 +17,30 @@ const PostSchema = mongoose.Schema(
         },
         featured_img: {
             data: Buffer,
-            imgType: String
+            imgType: String,
         },
         created_on: {
             type: Date,
-            required: true
+            required: true,
         },
         author: {
-            type: [ mongoose.Schema.Types.ObjectId ],
-            required: true
+            type: [mongoose.Schema.Types.ObjectId],
+            required: true,
         },
         category: {
             type: String,
-            required: true
+            required: true,
         },
         org_id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Organization",
-            required: true
-        }
+            required: true,
+        },
     },
     {
         timestamps: true,
     },
 );
 
-module.exports = mongoose.model("Post", PostSchema);
+export default mongoose.model("Post", PostSchema);
+

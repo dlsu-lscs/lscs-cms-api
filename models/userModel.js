@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 /*
     User Schema
@@ -15,24 +15,24 @@ const UserSchema = mongoose.Schema(
             required: true,
             validate: {
                 validator: checkName,
-                message: "Username already exists."
-            }
+                message: "Username already exists.",
+            },
         },
         email: {
             type: String,
             required: true,
-            match: ["^[^\s@]+@[^\s@]+\.[^\s@]+$", "Please enter a valid email address."],
+            match: ["^[^s@]+@[^s@]+.[^s@]+$", "Please enter a valid email address."],
             validate: {
                 validator: checkEmail,
-                message: "Email already used."
-            }
+                message: "Email already used.",
+            },
         },
         password: {
             type: String,
             required: true,
             minlength: 8,
-            maxlength: 128
-        }
+            maxlength: 128,
+        },
     },
     {
         timestamps: true,
@@ -59,4 +59,4 @@ async function checkEmail(email) {
     }
 }
 
-module.exports = mongoose.model("User", OrganizationSchema);
+export default mongoose.model("User", UserSchema);

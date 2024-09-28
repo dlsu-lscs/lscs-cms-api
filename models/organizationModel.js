@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 /*
     Organization Schema
@@ -17,8 +17,8 @@ const OrganizationSchema = mongoose.Schema(
             required: true,
             validate: {
                 validator: checkName,
-                message: "Organization name already"
-            }
+                message: "Organization name already",
+            },
         },
         slug: {
             type: String,
@@ -40,4 +40,4 @@ async function checkName(name) {
     }
 }
 
-module.exports = mongoose.model("Organization", OrganizationSchema);
+export default mongoose.model("Organization", OrganizationSchema);
