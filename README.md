@@ -5,23 +5,43 @@
 ## TODOS
 
 - [x] simple setup, project structure, prettier(done)/eslint(maybe)
-- [ ] create `.env` file for important env_vars like `MONGO_URI`
-- [ ] be able to connect to mongodb
-- [ ] create schemas, conrollers/routes, services/handlers
-- [ ] endpoint: `/posts` -> CRUD
-- [ ] basic email and password login
-- [ ]
-- [ ]
-- [ ] dockerize???
+- [x] create `.env` file for important env_vars like `MONGO_URI`
+- [x] be able to connect to mongodb (via container rn)
+- [x] dockerize for easy dev env and prod builds
+- [x] create schemas
+- [ ] services/handlers
+- [ ] conrollers/routes
+    - [ ] endpoint: `/organizations` -> CRUD
+    - [ ] endpoint: `/users` -> CRUD
+    - [ ] endpoint: `/posts` -> CRUD
+- [ ] auth
+    - [ ] basic email and password login
+    - [ ] ensure protected routes -> ex. users can only view their own org posts
+    - [ ] ... 
 
 ## Start
 
-- dev:
+### Development
+
+- start via `docker`:
 
 ```bash
-npm run dev
+docker compose up -d
 ```
 
+- test connection via `curl` -> should return "HEALTHY"
+
+```bash
+curl http://localhost:3500/
+```
+
+- stop when done
+
+```bash
+docker compose down
+```
+
+### [WIP] Production
 - prod:
 
 ```bash
