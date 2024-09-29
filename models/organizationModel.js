@@ -30,6 +30,11 @@ const OrganizationSchema = mongoose.Schema(
     },
 );
 
+/*
+    HELPER FUNCTION
+    --
+    checks if name already exists
+*/
 async function checkName(name) {
     try {
         const existing_name = await User.findOne({ username: name });

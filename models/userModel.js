@@ -39,6 +39,11 @@ const UserSchema = mongoose.Schema(
     },
 );
 
+/*
+    HELPER FUNCTION
+    --
+    checks if name already exists
+*/
 async function checkName(name) {
     try {
         const existing_name = await User.findOne({ username: name });
@@ -49,6 +54,11 @@ async function checkName(name) {
     }
 }
 
+/*
+    HELPER FUNCTION
+    --
+    checks if email already exists
+*/
 async function checkEmail(email) {
     try {
         const existing_email = await User.findOne({ email: email });
