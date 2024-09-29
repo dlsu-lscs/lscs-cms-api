@@ -10,10 +10,10 @@
 - [x] dockerize for easy dev env and prod builds
 - [x] create schemas
 - [ ] services/handlers
-- [ ] conrollers/routes
-    - [ ] endpoint: `/organizations` -> CRUD
-    - [ ] endpoint: `/users` -> CRUD
-    - [ ] endpoint: `/posts` -> CRUD
+- [x] conrollers/routes
+    - [x] endpoint: `/organizations` -> CRUD
+    - [x] endpoint: `/users` -> CRUD
+    - [x] endpoint: `/posts` -> CRUD
 - [ ] auth
     - [ ] basic email and password login
     - [ ] ensure protected routes -> ex. users can only view their own org posts
