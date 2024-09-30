@@ -8,24 +8,42 @@ import {
 import { createUser, deleteUser, getUserById, getUsers, updateUser } from '../services/userService.js';
 import { createPost, deletePost, getPostById, getPosts, updatePost } from '../services/postService.js';
 
-const router = express.Router();
-
 /* ***** ORGANIZATIONS ***** */
-router.post('/orgs', createOrganization);
-router.get('/orgs/:id', getOrganizationById);
-router.put('/orgs/:id', updateOrganization);
-router.delete('/orgs/:id', deleteOrganization);
+export const orgsRouter = express.Router(); // -->  for '/orgs'
+
+// POST '/orgs'
+orgsRouter.post('/', createOrganization);
+// GET '/orgs/:id'
+orgsRouter.get('/:id', getOrganizationById);
+// PUT '/orgs/:id'
+orgsRouter.put('/:id', updateOrganization);
+// DELETE '/orgs/:id'
+orgsRouter.delete('/:id', deleteOrganization);
 
 /* ***** USERS ***** */
-router.post('/users', createUser);
-router.get('/users/', getUsers);
-router.get('/users/:id', getUserById);
-router.put('/users/:id', updateUser);
-router.delete('/users/:id', deleteUser);
+export const usersRouter = express.Router(); // --> for '/users'
+
+// POST '/users'
+usersRouter.post('/', createUser);
+// GET '/users'
+usersRouter.get('/', getUsers);
+// GET '/users/id'
+usersRouter.get('/:id', getUserById);
+// PUT '/users/id'
+usersRouter.put('/:id', updateUser);
+// DELETE '/users/id'
+usersRouter.delete('/:id', deleteUser);
 
 /* ***** POSTS ***** */
-router.post('/posts', createPost);
-router.get('/posts', getPosts);
-router.get('/posts/:id', getPostById);
-router.put('/posts/:id', updatePost);
-router.delete('/posts/:id', deletePost);
+export const postsRouter = express.Router(); // -->  for '/posts'
+
+// POST '/posts'
+postsRouter.post('/', createPost);
+// GET '/posts'
+postsRouter.get('/', getPosts);
+// GET '/posts/:id'
+postsRouter.get('/:id', getPostById);
+// PUT '/posts/:id'
+postsRouter.put('/:id', updatePost);
+// DELETE '/posts/:id'
+postsRouter.delete('/:id', deletePost);

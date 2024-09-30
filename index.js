@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import dbConnection from './db/connection.js';
 import mongoose from 'mongoose';
+import { orgsRouter, postsRouter, usersRouter } from './controllers/routes.js';
 
 const env = process.env.NODE_ENV || 'development';
 if (env === 'production') {
@@ -22,7 +23,9 @@ dbConnection();
 app.use(cors());
 app.use(express.json());
 
-// app.use("/", someRouter);
+app.use('/orgs', orgsRouter);
+app.use('/users', usersRouter);
+app.use('/posts', postsRouter);
 
 // #endregion middleware
 
