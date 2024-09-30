@@ -16,6 +16,7 @@
     - [x] endpoint: `/posts` -> CRUD
 - [ ] auth and validation
     - [ ] basic email and password login
+    - [ ] hash password with `bcrypt` before storing to database
     - [ ] ensure protected routes -> ex. users can only view their own org posts
     - [ ] ... 
 
