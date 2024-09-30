@@ -1,7 +1,9 @@
 import User from '../models/userModel.js'; // const User = require('../models/userModel');
 
+// POST /users?org_id=123
 export const createUser = async (req, res) => {
     try {
+        const orgId = req.query.org_id;
         const user = await User.create(req.body);
 
         res.status(201).json(user);
@@ -10,7 +12,23 @@ export const createUser = async (req, res) => {
     }
 };
 
-export const getUser = async (req, res) => {
+// GET /users
+export const getUsers = async (req, res) => {
+    try {
+        const users = await User.find();
+
+        if (!users) {
+            return res.status(404).json({ message: 'No users found' });
+        }
+
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// GET /users/:id
+export const getUserById = async (req, res) => {
     try {
         const { user_id } = req.params;
         const user = await User.findById(user_id);
@@ -25,6 +43,7 @@ export const getUser = async (req, res) => {
     }
 };
 
+// PUT /users/:id
 export const updateUser = async (req, res) => {
     try {
         const { user_id } = req.params;
@@ -42,6 +61,7 @@ export const updateUser = async (req, res) => {
     }
 };
 
+// DELETE /users/:id
 export const deleteUser = async (req, res) => {
     try {
         const { user_id } = req.params;
@@ -56,4 +76,3 @@ export const deleteUser = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-

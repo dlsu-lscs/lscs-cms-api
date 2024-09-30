@@ -1,5 +1,6 @@
 import Organization from '../models/organizationModel.js';
 
+// POST /orgs
 export const createOrganization = async (req, res) => {
     try {
         const org = await Organization.create(req.body);
@@ -10,7 +11,8 @@ export const createOrganization = async (req, res) => {
     }
 };
 
-export const getOrganization = async (req, res) => {
+// GET /orgs/:id
+export const getOrganizationById = async (req, res) => {
     try {
         const { org_id } = req.params;
         const org = await Organization.findById(org_id);
@@ -25,6 +27,7 @@ export const getOrganization = async (req, res) => {
     }
 };
 
+// PUT /orgs/:id
 export const updateOrganization = async (req, res) => {
     try {
         const { org_id } = req.params;
@@ -42,6 +45,7 @@ export const updateOrganization = async (req, res) => {
     }
 };
 
+// DELETE /orgs/:id
 export const deleteOrganization = async (req, res) => {
     try {
         const { org_id } = req.params;
