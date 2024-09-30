@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 /*
     Post Schema
@@ -21,10 +21,12 @@ const PostSchema = mongoose.Schema(
         },
         created_on: {
             type: Date,
+            default: Date.now(),
             required: true,
         },
         author: {
-            type: [mongoose.Schema.Types.ObjectId],
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
             required: true,
         },
         category: {
@@ -33,7 +35,7 @@ const PostSchema = mongoose.Schema(
         },
         org_id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Organization",
+            ref: 'Organization',
             required: true,
         },
     },
@@ -42,5 +44,4 @@ const PostSchema = mongoose.Schema(
     },
 );
 
-export default mongoose.model("Post", PostSchema);
-
+export default mongoose.model('Post', PostSchema);

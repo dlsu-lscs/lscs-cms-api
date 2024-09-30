@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 /*
     User Schema
@@ -7,7 +7,7 @@ const UserSchema = mongoose.Schema(
     {
         org_id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Organization",
+            ref: 'Organization',
             required: true,
         },
         username: {
@@ -15,16 +15,16 @@ const UserSchema = mongoose.Schema(
             required: true,
             validate: {
                 validator: checkName,
-                message: "Username already exists.",
+                message: 'Username already exists.',
             },
         },
         email: {
             type: String,
             required: true,
-            match: ["^[^s@]+@[^s@]+.[^s@]+$", "Please enter a valid email address."],
+            match: ['^[^s@]+@[^s@]+.[^s@]+$', 'Please enter a valid email address.'],
             validate: {
                 validator: checkEmail,
-                message: "Email already used.",
+                message: 'Email already used.',
             },
         },
         password: {
@@ -49,7 +49,7 @@ async function checkName(name) {
         const existing_name = await User.findOne({ username: name });
         return existing_name !== null;
     } catch (err) {
-        console.error("checkName error.");
+        console.error('checkName error.');
         return false;
     }
 }
@@ -64,9 +64,9 @@ async function checkEmail(email) {
         const existing_email = await User.findOne({ email: email });
         return existing_email !== null;
     } catch (err) {
-        console.error("checkEmail error.");
+        console.error('checkEmail error.');
         return false;
     }
 }
 
-export default mongoose.model("User", UserSchema);
+export default mongoose.model('User', UserSchema);

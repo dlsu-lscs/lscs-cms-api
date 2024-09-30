@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 /*
     Organization Schema
@@ -9,7 +9,7 @@ const OrganizationSchema = mongoose.Schema(
     {
         admin_id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Admin",
+            ref: 'Admin',
             required: true,
         },
         name: {
@@ -17,7 +17,7 @@ const OrganizationSchema = mongoose.Schema(
             required: true,
             validate: {
                 validator: checkName,
-                message: "Organization name already",
+                message: 'Organization name already',
             },
         },
         slug: {
@@ -40,9 +40,9 @@ async function checkName(name) {
         const existing_name = await User.findOne({ username: name });
         return existing_name !== null;
     } catch (err) {
-        console.error("checkName error.");
+        console.error('checkName error.');
         return false;
     }
 }
 
-export default mongoose.model("Organization", OrganizationSchema);
+export default mongoose.model('Organization', OrganizationSchema);
