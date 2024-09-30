@@ -1,12 +1,6 @@
-/**
- * CONTROLLER FILE
- * --
- * TODO: Set up 3 controller files for each model
- */
+import Organization from '../models/organizationModel.js';
 
-const Organization = require('../models/organizationModel');
-
-exports.createOrganization = async function(req, res) {
+export const createOrganization = async (req, res) => {
     try {
         const org = await Organization.create(req.body);
 
@@ -16,13 +10,13 @@ exports.createOrganization = async function(req, res) {
     }
 };
 
-exports.getOrganization = async function(req, res) {
+export const getOrganization = async (req, res) => {
     try {
         const { org_id } = req.params;
         const org = await Organization.findById(org_id);
 
         if (!org) {
-            return res.status(404).json({message: "Organization not found."});
+            return res.status(404).json({ message: 'Organization not found.' });
         }
 
         res.status(200).json(org);
@@ -31,13 +25,13 @@ exports.getOrganization = async function(req, res) {
     }
 };
 
-exports.updateOrganization = async function(req, res) {
-    try{
+export const updateOrganization = async (req, res) => {
+    try {
         const { org_id } = req.params;
         const org = await Organization.findByIdAndUpdate(org_id, req.body);
 
         if (!org) {
-            return res.status(404).json({ message: "Organization not found."});
+            return res.status(404).json({ message: 'Organization not found.' });
         }
 
         // return the updated org body
@@ -48,17 +42,17 @@ exports.updateOrganization = async function(req, res) {
     }
 };
 
-exports.deleteOrganization = async function(req, res) {
+export const deleteOrganization = async (req, res) => {
     try {
         const { org_id } = req.params;
         const org = await Organization.findByIdAndDelete(org_id, req.body);
 
         if (!org) {
-            res.status(404).json({ message: "Organization not found." });
+            res.status(404).json({ message: 'Organization not found.' });
         }
 
-        res.status(200).json({ message:"Organization deleted." });
+        res.status(200).json({ message: 'Organization deleted.' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-}
+};

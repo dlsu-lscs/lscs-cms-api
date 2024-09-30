@@ -1,12 +1,6 @@
-/**
- * CONTROLLER FILE
- * --
- * TODO: Set up 3 controller files for each model
- */
+import Post from '../models/postModel.js'; // const Post = require('../models/postModel');
 
-const Post = require('../models/postModel');
-
-exports.createPost = async function(req, res) {
+export const createPost = async (req, res) => {
     try {
         const post = await Post.create(req.body);
 
@@ -16,13 +10,13 @@ exports.createPost = async function(req, res) {
     }
 };
 
-exports.getPost = async function(req, res) {
+export const getPost = async (req, res) => {
     try {
         const { post_id } = req.params;
         const post = await Post.findById(post_id);
 
         if (!post) {
-            return res.status(404).json({message: "Post not found."});
+            return res.status(404).json({ message: 'Post not found.' });
         }
 
         res.status(200).json(post);
@@ -31,13 +25,13 @@ exports.getPost = async function(req, res) {
     }
 };
 
-exports.updatePost = async function(req, res) {
-    try{
+export const updatePost = async (req, res) => {
+    try {
         const { post_id } = req.params;
         const post = await Post.findByIdAndUpdate(post_id, req.body);
 
         if (!post) {
-            return res.status(404).json({ message: "Post not found."});
+            return res.status(404).json({ message: 'Post not found.' });
         }
 
         // return the updated org body
@@ -48,17 +42,18 @@ exports.updatePost = async function(req, res) {
     }
 };
 
-exports.deletePost = async function(req, res) {
+export const deletePost = async (req, res) => {
     try {
         const { post_id } = req.params;
         const post = await Post.findByIdAndDelete(post_id, req.body);
 
         if (!post) {
-            res.status(404).json({ message: "Post not found." });
+            res.status(404).json({ message: 'Post not found.' });
         }
 
-        res.status(200).json({ message:"Post deleted." });
+        res.status(200).json({ message: 'Post deleted.' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-}
+};
+
