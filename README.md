@@ -9,12 +9,12 @@
 - [x] be able to connect to mongodb (via container rn)
 - [x] dockerize for easy dev env and prod builds
 - [x] create schemas
-- [ ] services/handlers
+- [x] services/handlers
 - [x] conrollers/routes
     - [x] endpoint: `/organizations` -> CRUD
     - [x] endpoint: `/users` -> CRUD
     - [x] endpoint: `/posts` -> CRUD
-- [ ] auth
+- [ ] auth and validation
     - [ ] basic email and password login
     - [ ] ensure protected routes -> ex. users can only view their own org posts
     - [ ] ... 
