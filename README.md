@@ -9,6 +9,7 @@
 - [x] be able to connect to mongodb (via container rn)
 - [x] dockerize for easy dev env and prod builds
 - [x] create schemas
+    - [ ] create comment schema
 - [x] services/handlers
 - [x] conrollers/routes
     - [x] endpoint: `/organizations` -> CRUD
@@ -18,7 +19,8 @@
     - [ ] basic email and password login
     - [ ] hash password with `bcrypt` before storing to database
     - [ ] ensure protected routes -> ex. users can only view their own org posts
-    - [ ] ... 
+    - [ ] ...
+
 
 ## Start
 
