@@ -17,7 +17,7 @@ const OrganizationSchema = mongoose.Schema(
             required: true,
             validate: {
                 validator: checkName,
-                message: 'Organization name already',
+                message: 'Organization name already exists.',
             },
         },
         slug: {

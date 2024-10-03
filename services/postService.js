@@ -18,14 +18,35 @@ export const createPost = async (req, res) => {
 
 // GET /posts
 export const getPosts = async (req, res) => {
+    
+    let { page, pageSize } = req.query;
+
     try {
-        const posts = await Post.find();
+        page = parseInt(page, 10) || 1;
+        pageSize = parseInt(pageSize, 10) || 50;
+        
+        // mongodb aggregation framework
+        const posts = await Post.aggregate([
+            {
+                $facet: {
+                    metadata: [{ $count: 'totalCount' }],
+                    data: [
+                        { $skip: (page - 1) * pageSize },
+                        { $limit: pageSize }
+                    ]
+                }
+            }
+        ]);
 
-        if (!posts) {
-            return res.status(404).json({ message: 'No posts found.' });
-        }
+        const totalCount = (posts[0].metadata[0] && posts[0].metadata[0].totalCount) || 0;
 
-        res.status(200).json(posts);
+        res.status(200).json({
+            success: true,
+            posts: {
+                metadata: { totalCount, page, pageSize },
+                data: posts[0].data
+            }
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
