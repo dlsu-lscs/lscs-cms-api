@@ -15,20 +15,24 @@ const PostSchema = mongoose.Schema(
             type: String,
             required: true,
         },
+        comments: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Comment'
+        }],
         featured_img: {
             data: Buffer,
             imgType: String,
         },
         created_on: {
             type: Date,
-            default: Date.now(),
+            default: Date.now,
             required: true,
         },
-        author: {
+        author: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
             required: true,
-        },
+        }],
         category: {
             type: String,
             required: true,
