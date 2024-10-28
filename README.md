@@ -4,6 +4,10 @@
 
 ## TODOS
 
+- [ ] how to handle posting images with coolify (url to the img?, etc.)
+    - [ ] if url, update postModel
+    - [ ] if url, update createPost service
+    - [ ] if url, update README docs on Post endpoints
 - [x] simple setup, project structure, prettier(done)/eslint(maybe)
 - [x] create `.env` file for important env_vars like `MONGO_URI`
 - [x] be able to connect to mongodb (via container rn)
@@ -22,9 +26,9 @@
     - [ ] ensure protected routes -> ex. users can only view their own org posts
     - [ ] ...
 - [ ] add DOCUMENTATION for the `endpoints` (for the frontend to consume)
-    - [ ] docs: `orgsRouter`
+    - [x] docs: `postsRouter`
     - [ ] docs: `usersRouter`
-    - [ ] docs: `postsRouter`
+    - [ ] docs: `orgsRouter`
     - [ ] docs: `commentsRouter`
 
 
@@ -59,33 +63,186 @@ npm run start
 
 ## Endpoints
 
-`/posts` -> GET
-- ...description
-- example response:
+- *NOTE: All routes has GET, POST, PUT, DELETE endpoints*
+
+### Posts Endpoints
+
+#### GET `/posts`
+- gets information on ALL posts 
+
+#### GET `/posts/:id`
+- gets the information about a post given an id
+- example `response`:
     ```json
     {
-        "template": "test",
-        "eee": 123,
+        "_id": "64c1e8e9e4b08f001a4cdb22",
+        "title": "LSCS Blog \#7",
+        "content": "Main content goes here... example content",
+        "comments": [
+            {
+                "_id": "64c1e8f2e4b08f001a4cdb23",
+                "content": "Great insights! AI is indeed transforming the tech landscape.",
+                "created_on": "2024-10-28T15:25:30.000Z",
+                "author": {
+                    "_id": "64c1e870e4b08f001a4cdb20",
+                    "username": "jane.doe",
+                    "email": "jane.doe@example.com"
+                },
+                "org_id": {
+                    "_id": "64c1e8c5e4b08f001a4cdb21",
+                    "name": "Tech Innovators Inc.",
+                    "slug": "tech-innovators"
+                },
+                "post_id": "64c1e8e9e4b08f001a4cdb22",
+                "createdAt": "2024-10-28T15:25:30.000Z",
+                "updatedAt": "2024-10-28T15:26:00.000Z"
+            },
+            {
+                "_id": "64c1e8fae4b08f001a4cdb24",
+                "content": "Thanks for sharing! Looking forward to more articles on this topic.",
+                "created_on": "2024-10-28T15:30:00.000Z",
+                "author": {
+                    "_id": "64c1e871e4b08f001a4cdb25",
+                    "username": "john.smith",
+                    "email": "john.smith@example.com"
+                },
+                "org_id": {
+                    "_id": "64c1e8c5e4b08f001a4cdb21",
+                    "name": "Tech Innovators Inc.",
+                    "slug": "tech-innovators"
+                },
+                "post_id": "64c1e8e9e4b08f001a4cdb22",
+                "createdAt": "2024-10-28T15:30:00.000Z",
+                "updatedAt": "2024-10-28T15:31:00.000Z"
+            }
+        ],
+        "featured_img": {
+            "data": "<base64_encoded_image_data>",
+            "imgType": "image/png"
+        },
+        "created_on": "2024-10-28T15:20:30.000Z",
+        "author": [
+            {
+                "_id": "64c1e870e4b08f001a4cdb20",
+                "username": "jane.doe",
+                "email": "jane.doe@example.com"
+            }
+        ],
+        "category": "Technology",
+        "org_id": {
+            "_id": "64c1e8c5e4b08f001a4cdb21",
+            "name": "Tech Innovators Inc.",
+            "slug": "tech-innovators"
+        },
+        "createdAt": "2024-10-28T15:20:30.000Z",
+        "updatedAt": "2024-10-28T15:45:10.000Z"
     }
     ```
 
-`/users` -> GET
-- ...description
-- example response:
+#### POST `/posts`
+- creates a new post (checks if org_id is valid)
+- needs JWT token in the request headers
+- example `request`:
+```bash
+curl -X POST http://localhost:3500/posts \
+-H "Authorization: Bearer <JWT>" \
+-H "Content-Type: application/json"
+-d '{
+      "title": "New Post Title",
+      "content": "This is the content of the post.",
+      "comments": [],
+      "featured_img": {
+        "data": "<base64_encoded_image_data>",
+         "imgType": "image/jpeg"
+      },
+      "category": "News"
+    }'
+```
+
+#### PUT `/posts/:id`
+
+#### DELETE `/posts/:id`
+
+### GET `/users`
+- gets information on ALL users 
+
+### GET `/orgs`
+- gets information on ALL organization 
+
+### GET `/comments`
+- gets information on ALL comments
+
+
+### GET `/users/:id`
+- gets the information about a user given an id
+- example `response`:
     ```json
     {
-        "template": "test",
-        "eee": 123,
+        "_id": "64c1e870e4b08f001a4cdb20",
+        "org_id": {
+            "_id": "64c1e8c5e4b08f001a4cdb21",
+            "name": "Tech Innovators Inc.",
+            "slug": "tech-innovators",
+            "admin_id": "64c1e872e4b08f001a4cdb30"
+        },
+        "username": "jane.doe",
+        "email": "jane.doe@example.com",
+        "password": "hashed_password", // Note: In practice, do not expose password details
+        "createdAt": "2024-10-01T10:15:30.000Z",
+        "updatedAt": "2024-10-28T15:00:00.000Z"
     }
     ```
 
-`/orgs/:id` -> GET
-- ...description
-- example response:
+### GET `/orgs/:id`
+- gets the information about an organization given an id
+- example `response`:
     ```json
     {
-        "template": "test",
-        "eee": 123,
+        "_id": "64c1e8c5e4b08f001a4cdb21",
+        "admin_id": {
+            "_id": "64c1e872e4b08f001a4cdb30",
+            "username": "admin.john",
+            "email": "admin.john@example.com"
+        },
+        "name": "Tech Innovators Inc.",
+        "slug": "tech-innovators",
+        "createdAt": "2024-09-15T09:00:00.000Z",
+        "updatedAt": "2024-10-28T14:00:00.000Z",
+        "members": [
+            {
+                "_id": "64c1e870e4b08f001a4cdb20",
+                "username": "jane.doe",
+                "email": "jane.doe@example.com"
+            },
+            {
+                "_id": "64c1e871e4b08f001a4cdb25",
+                "username": "john.smith",
+                "email": "john.smith@example.com"
+            }
+        ]
     }
     ```
 
+### GET `/comments/:id`
+- gets the information about a comment given an id
+- example `response`:
+    ```json
+    {
+        "_id": "64c1e8f2e4b08f001a4cdb23",
+        "content": "Great insights! AI is indeed transforming the tech landscape.",
+        "created_on": "2024-10-28T15:25:30.000Z",
+        "author": {
+            "_id": "64c1e870e4b08f001a4cdb20",
+            "username": "jane.doe",
+            "email": "jane.doe@example.com"
+        },
+        "org_id": {
+            "_id": "64c1e8c5e4b08f001a4cdb21",
+            "name": "Tech Innovators Inc.",
+            "slug": "tech-innovators"
+        },
+        "post_id": "64c1e8e9e4b08f001a4cdb22",
+        "createdAt": "2024-10-28T15:25:30.000Z",
+        "updatedAt": "2024-10-28T15:26:00.000Z"
+    },
+    ```
