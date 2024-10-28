@@ -7,7 +7,7 @@ import {
 } from '../services/organizationService.js';
 import { createUser, deleteUser, getUserById, getUsers, updateUser } from '../services/userService.js';
 import { createPost, deletePost, getPostById, getPosts, updatePost } from '../services/postService.js';
-import { authenticateUser } from '../middlewares/authMiddleware.js';
+import { authorizationMiddleware } from '../middlewares/authMiddleware.js';
 
 /* ***** ORGANIZATIONS ***** */
 export const orgsRouter = express.Router(); // -->  for '/orgs'
@@ -39,12 +39,12 @@ usersRouter.delete('/:id', deleteUser);
 export const postsRouter = express.Router(); // -->  for '/posts'
 
 // POST '/posts'
-postsRouter.post('/', authenticateUser, createPost);
+postsRouter.post('/', authorizationMiddleware, createPost);
 // GET '/posts'
 postsRouter.get('/', getPosts);
 // GET '/posts/:id'
 postsRouter.get('/:id', getPostById);
 // PUT '/posts/:id'
-postsRouter.put('/:id', authenticateUser, updatePost);
+postsRouter.put('/:id', authorizationMiddleware, updatePost);
 // DELETE '/posts/:id'
-postsRouter.delete('/:id', authenticateUser, deletePost);
+postsRouter.delete('/:id', authorizationMiddleware, deletePost);
