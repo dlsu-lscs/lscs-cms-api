@@ -3,13 +3,14 @@ import Post from '../models/postModel.js'; // const Post = require('../models/po
 // POST /posts?org_id=123
 export const createPost = async (req, res) => {
     try {
-        // TODO: validation
-        // - check req.query.org_id === user's org_id
-        // - test code below --> should automatically apply user's org_id to post's org_id
-        // const orgId = req.query.org_id;
-        // const postData = {...req.body, org_id: orgId };
-        const post = await Post.create(req.body); // const post = await Post.create(postData);
-        // res.send(`Creating a post for organization ID: ${orgId}`);
+        const orgId = req.user.org_id;
+
+        if (orgId.toString() !== orgId) {
+            return res.status(403).json({ message: "Unauthorized: You can't create posts for another organization." });
+        }
+        const postData = { ...req.body, org_id: orgId };
+        const post = await Post.create(postData);
+
         res.status(201).json(post);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -18,13 +19,13 @@ export const createPost = async (req, res) => {
 
 // GET /posts
 export const getPosts = async (req, res) => {
-    
+
     let { page, pageSize } = req.query;
 
     try {
         page = parseInt(page, 10) || 1;
         pageSize = parseInt(pageSize, 10) || 50;
-        
+
         // mongodb aggregation framework
         const posts = await Post.aggregate([
             {
