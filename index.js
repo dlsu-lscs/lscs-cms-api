@@ -5,11 +5,9 @@ import dbConnection from './db/connection.js';
 import mongoose from 'mongoose';
 import { orgsRouter, postsRouter, usersRouter } from './controllers/routes.js';
 
-const env = process.env.NODE_ENV || 'development';
-if (env === 'production') {
-    dotenv.config({ path: '.env.production' });
-} else {
-    dotenv.config({ path: '.env.development' });
+const env = process.env.NODE_ENV; // NOTE: prod envs are on coolify
+if (env === '' || env === 'development') {
+    dotenv.config({ path: '.env' }); // only load .env when dev 
 }
 
 const app = express();

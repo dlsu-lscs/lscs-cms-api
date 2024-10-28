@@ -10,7 +10,7 @@ services:
   lscs_cms_api:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     container_name: lscs_cms_api
     ports:
       - "3500:3500"
