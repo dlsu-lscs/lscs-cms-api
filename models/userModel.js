@@ -47,7 +47,7 @@ const UserSchema = mongoose.Schema(
 async function checkName(name) {
     try {
         const existing_name = await User.findOne({ username: name });
-        return existing_name !== null;
+        return !existing_name;
     } catch (err) {
         console.error('checkName error.');
         return false;
@@ -62,7 +62,7 @@ async function checkName(name) {
 async function checkEmail(email) {
     try {
         const existing_email = await User.findOne({ email: email });
-        return existing_email !== null;
+        return !existing_email;
     } catch (err) {
         console.error('checkEmail error.');
         return false;

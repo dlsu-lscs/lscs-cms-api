@@ -11,10 +11,16 @@ const PostSchema = mongoose.Schema(
             type: String,
             required: true,
         },
-        content: {
-            type: String,
-            required: true,
-        },
+        content: [{
+            type: {
+                type: String,
+                required: true,
+            },
+            data: {
+                type: Object,
+                required: true,
+            }
+        }],
         comments: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Comment'

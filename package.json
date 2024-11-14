@@ -13,11 +13,13 @@
     "license": "ISC",
     "description": "",
     "dependencies": {
+        "@editorjs/editorjs": "^2.30.7",
         "cors": "^2.8.5",
         "docker": "^1.0.0",
         "dotenv": "^16.4.5",
-        "express": "^4.21.0",
+        "express": "^4.21.1",
         "jsonwebtoken": "^9.0.2",
+        "lscs-cms-api": "file:",
         "mongoose": "^8.6.3"
     },
     "devDependencies": {

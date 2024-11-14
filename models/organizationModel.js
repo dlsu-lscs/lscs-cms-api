@@ -37,7 +37,7 @@ const OrganizationSchema = mongoose.Schema(
 */
 async function checkName(name) {
     try {
-        const existing_name = await User.findOne({ username: name });
+        const existing_name = await Organization.findOne({ username: name });
         return existing_name !== null;
     } catch (err) {
         console.error('checkName error.');

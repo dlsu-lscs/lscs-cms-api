@@ -7,10 +7,16 @@ import mongoose from 'mongoose';
 
 const CommentSchema = mongoose.Schema(
     {
-        content: {
-            type: String,
-            required: true,
-        },
+        content: [{
+            type: {
+                type: String,
+                required: true,
+            },
+            data: {
+                type: Object,
+                required: true,
+            }
+        }],
         created_on: {
             type: Date,
             default: Date.now,
