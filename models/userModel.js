@@ -27,11 +27,20 @@ const UserSchema = mongoose.Schema(
                 message: 'Email already used.',
             },
         },
-        password: {
+        // NOTE: no need for pass since we'll use google login
+        // password: {
+        //     type: String,
+        //     required: true,
+        //     minlength: 8,
+        //     maxlength: 128,
+        // },
+        displayName: { // from google
             type: String,
-            required: true,
-            minlength: 8,
-            maxlength: 128,
+            required: false,
+        },
+        profilePhoto: { // from google
+            type: String,
+            required: false,
         },
     },
     {

@@ -1,10 +1,15 @@
-import User from '../models/userModel.js'; // const User = require('../models/userModel');
+import User from '../models/userModel.js';
 
 // POST /users?org_id=123
 export const createUser = async (req, res) => {
     try {
-        const orgId = req.query.org_id;
-        const user = await User.create(req.body);
+        const { org_id } = req.query;
+
+        // include org_id if provided (only if exists, most likely will)
+        const user = await User.create({
+            ...req.body,
+            org_id: org_id ? org_id : undefined,
+        });
 
         res.status(201).json(user);
     } catch (error) {
@@ -17,7 +22,7 @@ export const getUsers = async (req, res) => {
     try {
         const users = await User.find();
 
-        if (!users) {
+        if (!users || users.length === 0) {
             return res.status(404).json({ message: 'No users found' });
         }
 
@@ -30,9 +35,33 @@ export const getUsers = async (req, res) => {
 // GET /users/:id
 export const getUserById = async (req, res) => {
     try {
-        const { user_id } = req.params;
-        const user = await User.findById(user_id);
+        const { id } = req.params;
+        const user = await User.findById(id);
 
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// GET /users?email=test@dlsu.edu.ph
+export const getUserByEmail = async (req, res) => {
+    try {
+        const { email } = req.query;
+        if (!email) {
+            return res.status(400).json({ message: 'Email query parameter is required.' });
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ message: 'Invalid email format.' });
+        }
+
+        const user = await User.findOne({ email });
         if (!user) {
             return res.status(404).json({ message: 'User not found.' });
         }
@@ -46,16 +75,17 @@ export const getUserById = async (req, res) => {
 // PUT /users/:id
 export const updateUser = async (req, res) => {
     try {
-        const { user_id } = req.params;
-        const user = await User.findByIdAndUpdate(user_id, req.body);
+        const { id } = req.params;
+        const user = await User.findByIdAndUpdate(id, req.body, {
+            new: true, // return updated document if successful update
+            runValidators: true,
+        });
 
         if (!user) {
             return res.status(404).json({ message: 'User not found.' });
         }
 
-        // return the updated org body
-        const updatedUser = await User.findById(user_id);
-        res.status(201).json(updatedUser);
+        res.status(200).json(user);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -64,11 +94,11 @@ export const updateUser = async (req, res) => {
 // DELETE /users/:id
 export const deleteUser = async (req, res) => {
     try {
-        const { user_id } = req.params;
-        const user = await User.findByIdAndDelete(user_id, req.body);
+        const { id } = req.params;
+        const user = await User.findByIdAndDelete(id);
 
         if (!user) {
-            res.status(404).json({ message: 'User not found.' });
+            return res.status(404).json({ message: 'User not found.' });
         }
 
         res.status(200).json({ message: 'User deleted.' });

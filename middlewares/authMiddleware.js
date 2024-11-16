@@ -1,9 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/userModel.js';
 
-// TODO: integrate LSCS Central Auth microservice and get tokens from there
-// - make sure it is on the external database
-
 // NOTE: needs JWT token in the request headers
 export const authorizationMiddleware = async (req, res, next) => {
     try {
