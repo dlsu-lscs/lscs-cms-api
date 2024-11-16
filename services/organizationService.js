@@ -27,7 +27,7 @@ export const getOrganizationById = async (req, res) => {
     }
 };
 
-// PUT /orgs/:id
+// PUT /orgs/:id - mainly for updating the org's admin (leader/cms manager/any)
 export const updateOrganization = async (req, res) => {
     try {
         const { org_id } = req.params;
@@ -56,6 +56,15 @@ export const deleteOrganization = async (req, res) => {
         }
 
         res.status(200).json({ message: 'Organization deleted.' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const checkIfOrgExists = async (req, res) => {
+    try {
+        // hit database -> get name of org
+        // if exists, then good
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

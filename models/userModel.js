@@ -8,7 +8,7 @@ const UserSchema = mongoose.Schema(
         org_id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Organization',
-            required: true,
+            required: false,
         },
         username: {
             type: String,
