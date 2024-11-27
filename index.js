@@ -6,7 +6,7 @@ import { orgsRouter, postsRouter, usersRouter } from './controllers/routes.js';
 
 const env = process.env.NODE_ENV; // NOTE: prod envs are on coolify
 if (env === '' || env === 'development') {
-    dotenv.config({ path: '.env' }); // only load .env when dev 
+    dotenv.config({ path: '.env' }); // only load .env when dev
 }
 
 const app = express();
@@ -23,6 +23,7 @@ app.use(express.json());
 app.use('/orgs', orgsRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
+app.use('/uploads', express.static('uploads'));
 
 // #endregion middleware
 

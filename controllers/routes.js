@@ -8,6 +8,7 @@ import {
 import { createUser, deleteUser, getUserById, getUsers, updateUser } from '../services/userService.js';
 import { createPost, deletePost, getPostById, getPosts, updatePost } from '../services/postService.js';
 import { authorizationMiddleware } from '../middlewares/authMiddleware.js';
+import { uploadFile } from '../services/fileService.js';
 
 /* ***** ORGANIZATIONS ***** */
 export const orgsRouter = express.Router(); // -->  for '/orgs'
@@ -48,3 +49,8 @@ postsRouter.get('/:id', getPostById);
 postsRouter.put('/:id', authorizationMiddleware, updatePost);
 // DELETE '/posts/:id'
 postsRouter.delete('/:id', authorizationMiddleware, deletePost);
+
+/* ***** FILES ***** */
+
+// POST '/files/upload'
+filesRouter.post('/upload', uploadFile);
