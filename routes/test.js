@@ -5,7 +5,7 @@ const cookie = require('express-session/session/cookie');
 
 // GET: /test/user-id
 router.get('/user-id', ensureAuthenticated, (req, res) => {
-    res.json({ userId: req.user._id });
+    res.status(200).json({ userId: req.user._id });
 });
 
 module.exports = router;

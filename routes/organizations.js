@@ -15,16 +15,38 @@ router.post('/', ensureAuthenticated, async (req, res) => {
             slug,
             description,
             adminId,
+            members: [adminId] // first member of new org will be its creator
         });
 
         const savedOrg = await newOrg.save();
 
-        // TODO: add the new Organization (ref) to the current User.orgId (array) and new Organization.members (array)
+        // push new orgId to current user 
+        await User.findByIdAndUpdate(adminId, {
+            $push: { orgIds: savedOrg._id }
+        });
 
         res.status(201).json(savedOrg);
     } catch (error) {
         console.error('Error creating organization:', error);
         res.status(500).json({ error: 'An error occurred while creating the organization.' });
+    }
+});
+
+
+// GET /orgs/:id
+router.get('/:id', async (req, res) => {
+    try {
+        const org = await Organization.findById(req.params.id)
+            .populate('members', 'name email')
+
+        if (!org) {
+            return res.status(404).json({ error: 'Organization not found.' });
+        }
+
+        res.status(200).json(org);
+    } catch (error) {
+        console.error('Error fetching organization:', error);
+        res.status(500).json({ error: 'An error occurred while fetching the organization.' });
     }
 });
 
