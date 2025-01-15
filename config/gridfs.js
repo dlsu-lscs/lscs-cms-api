@@ -13,7 +13,7 @@ conn.once('open', () => {
 
 const storage = new GridFsStorage({
     url: process.env.MONGO_URI,
-    options: { useNewUrlParser: true, useUnifiedTopology: true },
+    // options: { useNewUrlParser: true, useUnifiedTopology: true },
     file: (req, file) => {
         return {
             filename: `${Date.now()}-${file.originalname}`, // default filename

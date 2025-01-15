@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const { gfs, upload } = require('../gridfs');
+const { gfs, upload } = require('../config/gridfs');
 const router = express.Router();
 
 // POST: upload
