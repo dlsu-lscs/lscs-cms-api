@@ -1,22 +1,28 @@
 const express = require('express');
 const Post = require('../models/Post');
 const router = express.Router();
+const { ensureAuthenticated } = require('../middlewares/auth')
 
 // POST: /posts
-// request body expects: 
-router.post('/', async (req, res) => {
+// request body expects: title, content, category, orgId
+router.post('/', ensureAuthenticated, async (req, res) => {
     try {
-        const { title, content, category, author, orgId } = req.body;
+        const { title, content, category, orgId } = req.body; // orgId, frontend should pass the orgId of the current user (maybe create
+        const authorId = req.user._id;
 
-        if (!title || !content || !category || !author || !orgId) {
+        if (!title || !content || !category || !orgId) {
             return res.status(400).json({ error: 'All fields are required.' });
         }
+
+        // NOTE: given authorId, check org if belongs
+        // - use User._id, User.orgId
+
 
         const newPost = new Post({
             title,
             content,
             category,
-            author,
+            authorId: authorId,
             orgId
         });
 
@@ -45,5 +51,7 @@ router.get('/:id', async (req, res) => {
         res.status(500).json({ error: 'An error occurred while fetching the post.' });
     }
 });
+
+// TODO: GetAllPostsByUserEmail
 
 module.exports = router;

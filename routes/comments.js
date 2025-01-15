@@ -5,6 +5,7 @@ const Post = require('../models/Post');
 const Comment = require('../models/Comment');
 
 // POST: add comment on a post
+// request body expects: content, parentCommentId (optional for nested comments)
 router.post('/:postId/comments', async (req, res) => {
     try {
         const { postId } = req.params;

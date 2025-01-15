@@ -7,6 +7,7 @@ const UserSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
     lastLogin: String,
     orgId: { type: mongoose.Schema.Types.ObjectId, ref: 'Organization', required: false, }
+    // TODO: maybe make the orgId an array (users can have multiple orgs) ???
 });
 
 module.exports = mongoose.model('User', UserSchema);

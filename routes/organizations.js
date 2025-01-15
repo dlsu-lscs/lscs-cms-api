@@ -4,7 +4,7 @@ const { ensureAuthenticated } = require('../middlewares/auth')
 const router = express.Router();
 
 // POST: /orgs
-// request body expects: 
+// request body expects: name, slug, description
 router.post('/', ensureAuthenticated, async (req, res) => {
     try {
         const { name, slug, description } = req.body;
@@ -18,6 +18,8 @@ router.post('/', ensureAuthenticated, async (req, res) => {
         });
 
         const savedOrg = await newOrg.save();
+
+        // TODO: add the new Organization (ref) to the current User.orgId (array) and new Organization.members (array)
 
         res.status(201).json(savedOrg);
     } catch (error) {
