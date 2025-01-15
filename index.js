@@ -48,5 +48,7 @@ app.use('/posts', require('./routes/posts'));
 app.use('/files', require('./routes/files'));
 app.use('/', require('./routes/comments'));
 
+app.use('/test', require('./routes/test'));
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
