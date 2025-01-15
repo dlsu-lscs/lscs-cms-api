@@ -1,5 +1,6 @@
 # LSCS CMS API
 
+- official URL: [https://cms.app.dlsu-lscs.org](https://cms.app.dlsu-lscs.org)
 - docs: [https://docs.google.com/document/d/1pCdrbqCXFOat7dLoNG91BZaSON4g-3R_2e0dbLvyQ8E/edit?usp=sharing](https://docs.google.com/document/d/1pCdrbqCXFOat7dLoNG91BZaSON4g-3R_2e0dbLvyQ8E/edit?usp=sharing)
 
 > [!IMPORTANT]
@@ -7,22 +8,8 @@
 
 ### Development
 
-- start via `docker`:
-
 ```bash
-docker compose up -d
-```
-
-- test connection via `curl` -> should return "HEALTHY"
-
-```bash
-curl http://localhost:3000/
-```
-
-- stop when done
-
-```bash
-docker compose down
+npm run dev
 ```
 
 ## Routes
