@@ -5,7 +5,7 @@ const router = express.Router();
 const { ensureAuthenticated } = require('../middlewares/auth')
 
 // POST: /posts
-// request body expects: title, content, category, orgId
+// request body expects: title (string), content (string), category (string), orgIds (array)
 router.post('/', ensureAuthenticated, async (req, res) => {
     try {
         // NOTE: for orgId, frontend should pass one or many orgId of the current user
@@ -30,7 +30,7 @@ router.post('/', ensureAuthenticated, async (req, res) => {
             title,
             content,
             category,
-            authorId: authorId,
+            author: authorId,
             orgIds
         });
 
@@ -83,7 +83,7 @@ router.get('/org/:orgId', async (req, res) => {
 // TODO: GetAllPostsByUserEmail
 
 // PUT: /posts/:id
-// - update a post by ID
+// - update a post by id
 router.put('/:id', ensureAuthenticated, async (req, res) => {
     try {
         const { title, content, category, orgIds } = req.body;
@@ -104,7 +104,10 @@ router.put('/:id', ensureAuthenticated, async (req, res) => {
             return res.status(404).json({ error: 'Post not found.' });
         }
 
-        // TODO: check if Post.author is the same as authorId
+        // make sure only the author can update the post
+        if (post.author.toString() !== authorId.toString()) {
+            return res.status(403).json({ error: 'You are not authorized to update this post.' });
+        }
 
         // check if current user is a member in the org
         const invalidOrgIds = orgIds.filter(orgId => !user.orgIds.includes(orgId));
@@ -128,6 +131,22 @@ router.put('/:id', ensureAuthenticated, async (req, res) => {
     }
 });
 
+// DELETE: /posts/:id
+// - delete a post by id
+router.delete('/:id', ensureAuthenticated, async (req, res) => {
+    try {
+        const post = await Post.findByIdAndDelete(req.params.id);
+
+        if (!post) {
+            return res.status(404).json({ error: 'Post not found.' });
+        }
+
+        res.status(200).json({ message: 'Post deleted successfully.' });
+    } catch (error) {
+        console.error('Error deleting post:', error);
+        res.status(500).json({ error: 'An error occurred while deleting the post.' });
+    }
+});
 
 
 module.exports = router;

@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
-            .populate('orgId', 'name slug');
+            .populate('orgIds', 'name slug');
 
         if (!user) {
             return res.status(404).json({ error: 'User not found.' });
@@ -32,6 +32,7 @@ router.get('/:id', async (req, res) => {
 
 // POST: /users/join
 // - user joining an organization
+// request body expects: orgId (string)
 router.post('/join', ensureAuthenticated, async (req, res) => {
     try {
         const { orgId } = req.body;
