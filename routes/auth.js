@@ -11,6 +11,7 @@ router.get(
     passport.authenticate('google', { failureRedirect: '/login' }),
     (req, res) => {
         res.status(200).json({ message: 'Login successful', user: req.user });
+        // TODO: make use of redirect to frontend page
         // res.redirect(process.env.FRONTEND_DOMAIN);
     }
 );
