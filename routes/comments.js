@@ -3,10 +3,11 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Post = require('../models/Post');
 const Comment = require('../models/Comment');
+const { ensureAuthenticated } = require('../middlewares/auth');
 
 // POST: add comment on a post
 // request body expects: content, parentCommentId (optional for nested comments)
-router.post('/:postId/comments', async (req, res) => {
+router.post('/:postId/comments', ensureAuthenticated, async (req, res) => {
     try {
         const { postId } = req.params;
         const { content, parentCommentId } = req.body;
@@ -66,7 +67,7 @@ router.get('/:postId/comments', async (req, res) => {
 });
 
 // DELETE: delete a comment
-router.delete('/comments/:commentId', async (req, res) => {
+router.delete('/comments/:commentId', ensureAuthenticated, async (req, res) => {
     try {
         const { commentId } = req.params;
 
