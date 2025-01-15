@@ -1,4 +1,4 @@
-import Post from '../models/postModel.js'; // const Post = require('../models/postModel');
+import Post from '../models/Post.js'; // const Post = require('../models/postModel');
 
 // POST /posts?org_id=123
 export const createPost = async (req, res) => {

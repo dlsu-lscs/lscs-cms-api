@@ -1,4 +1,4 @@
-import Organization from '../models/organizationModel.js';
+import Organization from '../models/Organization.js';
 
 // POST /orgs
 export const createOrganization = async (req, res) => {
