@@ -1,25 +1,21 @@
 services:
+  lscs_cms_api:
+    container_name: lscs_cms_api
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/lscs_cms_db
+    depends_on:
+      - mongo
+
   lscs_cms_db:
-    image: mongo
+    image: mongo:latest
     container_name: lscs_cms_db
     ports:
       - "27017:27017"
     volumes:
       - lscs_cms_data:/data/db
 
-  lscs_cms_api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: lscs_cms_api
-    ports:
-      - "3000:3000"
-    depends_on:
-      - lscs_cms_db
-
 volumes:
   lscs_cms_data:
-
-networks:
-  default:
-    driver: bridge
