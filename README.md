@@ -27,10 +27,18 @@ curl https://cms.app.dlsu-lscs.org/users
 [{ ... }, {...}, {...}] # the "..." are the user info
 ```
 
-### POST `/posts
+### POST `/posts`
 - creates a post
+- needs to be authenticated (cookie)
 - example:
 ```bash
 curl -X POST -d "{}" https://cms.app.dlsu-lscs.org/posts
 ```
 
+### GET `/posts/:id`
+- get specific post by its id
+
+```bash
+# request
+curl -X GET https://cms.app.dlsu-lscs.org/posts/678820124b0cc005a8558d2c
+```
