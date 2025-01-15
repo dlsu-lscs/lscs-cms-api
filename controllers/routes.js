@@ -9,6 +9,7 @@ import { createUser, deleteUser, getUserById, getUsers, updateUser } from '../se
 import { createPost, deletePost, getPostById, getPosts, updatePost } from '../services/postService.js';
 import { authorizationMiddleware } from '../middlewares/authMiddleware.js';
 import { uploadFile } from '../services/fileService.js';
+// import { router } from '../services/authService.js';
 
 /* ***** ORGANIZATIONS ***** */
 export const orgsRouter = express.Router(); // -->  for '/orgs'
@@ -53,4 +54,6 @@ postsRouter.delete('/:id', authorizationMiddleware, deletePost);
 /* ***** FILES ***** */
 
 // POST '/files/upload'
+export const filesRouter = express.Router(); // -->  for '/files'
 filesRouter.post('/upload', uploadFile);
+
