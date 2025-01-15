@@ -70,14 +70,13 @@ router.delete('/comments/:commentId', async (req, res) => {
     try {
         const { commentId } = req.params;
 
-        // Find and delete the comment
         const deletedComment = await Comment.findByIdAndDelete(commentId);
 
         if (!deletedComment) {
             return res.status(404).json({ error: 'Comment not found' });
         }
 
-        // Remove the comment reference from the associated post
+        // remove the comment ref on post
         await Post.updateOne(
             { comments: commentId },
             { $pull: { comments: commentId } }

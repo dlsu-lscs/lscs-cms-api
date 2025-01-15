@@ -23,8 +23,8 @@ router.post('/', ensureAuthenticated, async (req, res) => {
 
         // check if user is in the organization
         const validOrg = Array.isArray(orgId)
-            ? orgId.some(id => user.orgId.includes(id))
-            : user.orgId.includes(orgId);
+            ? orgId.some(id => user.orgIds.includes(id))
+            : user.orgIds.includes(orgId);
 
         if (!validOrg) {
             return res.status(403).json({ error: 'User is not a member of the organization.' });

@@ -7,7 +7,7 @@ const PostSchema = new mongoose.Schema({
     featuredImg: { data: Buffer, imgType: String, },
     createdAt: { type: Date, default: Date.now },
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    orgId: { type: mongoose.Schema.Types.ObjectId, ref: 'Organization', required: true, },
+    orgIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Organization', required: true, }],
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
 });
 
