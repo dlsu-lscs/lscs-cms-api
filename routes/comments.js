@@ -5,9 +5,10 @@ const Post = require('../models/Post');
 const Comment = require('../models/Comment');
 const { ensureAuthenticated } = require('../middlewares/auth');
 
-// POST: add comment on a post
+// POST: /:postId/comment 
+// - add comment on a post
 // request body expects: content, parentCommentId (optional for nested comments)
-router.post('/:postId/comments', ensureAuthenticated, async (req, res) => {
+router.post('/:postId/comment', ensureAuthenticated, async (req, res) => {
     try {
         const { postId } = req.params;
         const { content, parentCommentId } = req.body;
