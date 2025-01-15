@@ -45,7 +45,7 @@ docker compose up -d
 - test connection via `curl` -> should return "HEALTHY"
 
 ```bash
-curl http://localhost:3500/
+curl http://localhost:3000/
 ```
 
 - stop when done
@@ -144,7 +144,7 @@ npm run start
 - needs JWT token in the request headers
 - example `request`:
 ```bash
-curl -X POST http://localhost:3500/posts \
+curl -X POST http://localhost:3000/posts \
 -H "Authorization: Bearer <JWT>" \
 -H "Content-Type: application/json"
 -d '{

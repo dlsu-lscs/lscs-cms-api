@@ -13,7 +13,7 @@ services:
       dockerfile: Dockerfile
     container_name: lscs_cms_api
     ports:
-      - "3500:3500"
+      - "3000:3000"
     depends_on:
       - lscs_cms_db
 
