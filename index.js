@@ -22,13 +22,13 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-// app.use(
-//     cors({
-//         origin: "http://localhost:5173", // frontend
-//         credentials: true,
-//     })
-// );
-app.use(cors())
+app.use(
+    cors({
+        origin: "http://localhost:5173", // TODO: set to official frontend DNS
+        credentials: true,
+    })
+);
+// app.use(cors())
 
 // db
 mongoose
