@@ -17,8 +17,8 @@ app.use(
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
-        // cookie: { secure: process.env.NODE_ENV === "production" ? true : false }
-        cookie: false
+        cookie: { secure: process.env.NODE_ENV === "production" ? true : false } // need https frontend
+        // cookie: false // NOTE: temporary until frontend is hosted (need https)
     })
 );
 app.use(passport.initialize());
@@ -29,7 +29,6 @@ app.use(
         credentials: true,
     })
 );
-// app.use(cors())
 
 // db
 mongoose
