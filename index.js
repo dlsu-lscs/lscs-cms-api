@@ -17,14 +17,15 @@ app.use(
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
-        cookie: { secure: process.env.NODE_ENV === "production" ? true : false }
+        // cookie: { secure: process.env.NODE_ENV === "production" ? true : false }
+        cookie: false
     })
 );
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(
     cors({
-        origin: process.env.FRONTEND_DOMAIN, // TODO: set to official frontend DNS
+        origin: process.env.FRONTEND_DOMAIN, // TODO: set to official frontend DNS (make sure its https so cookies will be sent)
         credentials: true,
     })
 );
