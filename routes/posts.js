@@ -4,7 +4,26 @@ const User = require('../models/User');
 const router = express.Router();
 const { ensureAuthenticated } = require('../middlewares/auth')
 
+// GET: /posts
+// - fetch all posts of the current authenticated user
+router.get('/', ensureAuthenticated, async (req, res) => {
+    try {
+        const userId = req.user._id;
+
+        const userPosts = await Post.find({ author: userId })
+            .populate('author', 'name email')
+            .populate('orgIds', 'name slug')
+            .populate('comments');
+
+        res.status(200).json(userPosts);
+    } catch (error) {
+        console.error('Error fetching user posts:', error);
+        res.status(500).json({ error: 'An error occurred while fetching user posts.' });
+    }
+});
+
 // POST: /posts
+// - creating a post
 // request body expects: title (string), content (string), category (string), orgIds (array)
 router.post('/', ensureAuthenticated, async (req, res) => {
     try {
@@ -79,8 +98,6 @@ router.get('/org/:orgId', async (req, res) => {
         res.status(500).json({ error: 'An error occurred while fetching the posts.' });
     }
 });
-
-// TODO: GetAllPostsByUserEmail
 
 // PUT: /posts/:id
 // - update a post by id

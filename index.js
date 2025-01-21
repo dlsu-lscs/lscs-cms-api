@@ -6,6 +6,7 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 require('./config/passport');
 const { upload } = require('./config/gridfs');
+const cors = require('cors');
 
 const app = express();
 
@@ -21,6 +22,13 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+// app.use(
+//     cors({
+//         origin: "http://localhost:5173", // frontend
+//         credentials: true,
+//     })
+// );
+app.use(cors())
 
 // db
 mongoose

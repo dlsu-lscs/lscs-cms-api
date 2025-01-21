@@ -5,14 +5,23 @@ const router = express.Router();
 // google auth: GET /auth/login
 router.get('/login', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
+// login: GET /auth/user
+router.get('/user', (req, res) => {
+    if (req.isAuthenticated()) {
+        res.status(200).json({ message: 'Login successful', user: req.user });
+        // res.json(req.user);
+    } else {
+        res.status(401).json({ message: "Not authenticated" });
+    }
+});
+
 // login: GET /auth/login
 router.get(
     '/google/callback',
-    passport.authenticate('google', { failureRedirect: '/login' }),
+    passport.authenticate('google', { failureRedirect: process.env.FRONTEND_DOMAIN + '/login' }), // TODO: redirect to error page (frontend)
     (req, res) => {
-        res.status(200).json({ message: 'Login successful', user: req.user });
-        // TODO: make use of redirect to frontend page
-        // res.redirect(process.env.FRONTEND_DOMAIN);
+        // res.redirect(process.env.FRONTEND_DOMAIN); // TODO: should redirect to success/home page (frontend)
+        res.redirect("/posts"); // NOTE: temporary (should make a get request to /post)
     }
 );
 
