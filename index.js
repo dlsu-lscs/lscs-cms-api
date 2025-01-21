@@ -17,8 +17,10 @@ app.use(
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
-        cookie: { secure: process.env.NODE_ENV === "production" ? true : false } // need https frontend
-        // cookie: false // NOTE: temporary until frontend is hosted (need https)
+        cookie: {
+            secure: process.env.NODE_ENV === 'production', // use secure cookies in production
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // adjust SameSite attribute based on environment
+        },
     })
 );
 app.use(passport.initialize());

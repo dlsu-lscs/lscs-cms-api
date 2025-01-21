@@ -14,6 +14,19 @@ npm run dev
 
 ## Routes
 
+### Auth
+
+#### GET `/auth/login`
+- redirects to google login
+- calls `/auth/google/callback` after login
+
+> [!IMPORTANT]
+> - if successful, it redirects to `/posts` (fetches all posts of current logged in user)
+>   - **NOTE: for production, this should redirect to the frontend success/home page**
+
+#### GET `/auth/user`
+- gets the information of the current logged in user
+
 ### User
 
 #### GET `/users`

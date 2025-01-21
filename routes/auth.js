@@ -15,7 +15,8 @@ router.get('/user', (req, res) => {
     }
 });
 
-// login: GET /auth/login
+// login: GET /auth/google/callback
+// - called after /auth/login
 router.get(
     '/google/callback',
     passport.authenticate('google', { failureRedirect: process.env.FRONTEND_DOMAIN + '/login' }), // TODO: redirect to error page (frontend)
