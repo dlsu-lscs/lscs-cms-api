@@ -4,7 +4,18 @@
 - docs: [https://docs.google.com/document/d/1pCdrbqCXFOat7dLoNG91BZaSON4g-3R_2e0dbLvyQ8E/edit?usp=sharing](https://docs.google.com/document/d/1pCdrbqCXFOat7dLoNG91BZaSON4g-3R_2e0dbLvyQ8E/edit?usp=sharing)
 
 > [!IMPORTANT]
-> a user is created first (via /auth/login) before assigning an organization
+> flow looks like this:
+> 1. a user is created first through google login (via `/auth/login`)
+> 2. assign an organization using `/users/join` (`POST` request, body: `orgId` (string))
+>   - for testing use: `67881f117fd4d453d6c333d9` as `orgId` (string)
+> 3. create a post on `/posts` (`POST` request, body: `title` (string), `content` (string), `category` (string), `orgIds` (array))
+>   - to create a post you need to be logged in first (uses session cookie)
+>   - example request (using `curl`):
+>   ```bash
+>   curl -X POST -H "Cookie: connect.sid=s%3ASPvz1TN7epwTLEq9A7XVhqlQRnV29Hrg.ZNV6fhWt8OwynndpLrsUg2ZOSCmSOWzP%2BDNYsjxU8gY" -H "Content-Type: application/json" -d '{ "title": "Test Post2", "content": "again This is the content of the new post.", "category": "Technology", "orgIds": ["67881f117fd4d453d6c333d9"] }' https://cms.app.dlsu-lscs.org/posts
+>   ```
+>   - [see curl request for cookie-protected routes guide to get the Cookie header](https://github.com/ejsadiarin/wizardry/blob/ce86357b128ffd6a2b0e556489242a8b82f7a050/programming/api-protected-route-check-with-cookie-connectsid-via-curl.md#L4)
+> 4. get all posts on `/posts` (`GET` request)
 
 ### Development
 
