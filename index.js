@@ -12,17 +12,32 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
+
+// app.use(
+//     session({
+//         secret: process.env.SESSION_SECRET,
+//         resave: false,
+//         saveUninitialized: true,
+//         cookie: {
+//             secure: process.env.NODE_ENV === 'production', // use secure cookies in production
+//             sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // adjust SameSite attribute based on environment
+//         },
+//     })
+// );
+
 app.use(
     session({
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
         cookie: {
-            secure: process.env.NODE_ENV === 'production', // use secure cookies in production
-            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // adjust SameSite attribute based on environment
+            secure: 'auto',
+            httpOnly: true,
+            sameSite: 'lax',
         },
     })
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(
