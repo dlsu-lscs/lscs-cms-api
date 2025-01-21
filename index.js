@@ -24,7 +24,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(
     cors({
-        origin: "http://localhost:5173", // TODO: set to official frontend DNS
+        origin: process.env.FRONTEND_DOMAIN, // TODO: set to official frontend DNS
         credentials: true,
     })
 );
