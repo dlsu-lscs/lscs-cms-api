@@ -1,5 +1,5 @@
 const express = require('express');
-const Post = require('../models/Post');
+const Post = require('../models/Post').default;
 const User = require('../models/User');
 const router = express.Router();
 const { ensureAuthenticated } = require('../middlewares/auth')
@@ -10,8 +10,8 @@ router.get('/', ensureAuthenticated, async (req, res) => {
     try {
         const userId = req.user._id;
 
-        const userPosts = await Post.find({ author: userId })
-            .populate('author', 'name email')
+        const userPosts = await Post.find({ authors: userId })
+            .populate('authors', 'name email')
             .populate('orgIds', 'name slug')
             .populate('comments');
 
@@ -29,6 +29,7 @@ router.post('/', ensureAuthenticated, async (req, res) => {
     try {
         // NOTE: for orgId, frontend should pass one or many orgId of the current user
         const { title, content, category, orgIds } = req.body;
+        // TODO: since authors is now an array (maybe get from req body)
         const authorId = req.user._id;
 
         if (!title || !content || !category || !orgIds || orgIds.length === 0) {
@@ -49,7 +50,7 @@ router.post('/', ensureAuthenticated, async (req, res) => {
             title,
             content,
             category,
-            author: authorId,
+            author: authorId, // TODO: make it an array
             orgIds
         });
 
